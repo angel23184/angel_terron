@@ -18,6 +18,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.use('/messages', require('./messageapp'));
+app.use('/messages', require('./messageRoute'));
 
 module.exports = app;
