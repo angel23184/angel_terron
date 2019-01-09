@@ -39,7 +39,7 @@ const payload={
     body:"body"
 }
 axios.post(URL,payload)
-.then(res=>setTimeout(()=>console.log(res.status, res.data)))
+.then(res=>setTimeout(()=>console.log(res.status, res.data)),5000)
 .catch(err => console.log(err.response.status, err.response.data));
 
 
