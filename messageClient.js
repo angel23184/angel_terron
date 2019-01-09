@@ -1,6 +1,6 @@
 const axios = require('axios');
 const PORT = 3000;
-const SERVER_NAME = "exercise-1_messageapp_1";
+const SERVER_NAME = "angel_terron_messageapp_1";
 
 const sendMessage = (destination, body, res) =>{
     const URL = `http://${SERVER_NAME}:${PORT}/message`;
