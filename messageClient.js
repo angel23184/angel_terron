@@ -9,7 +9,7 @@ const sendMessage = (destination, body, res) =>{
         body
       })
       .then(() =>{
-        res.status(200).json({message:"OK"})
+         res.status(200).json({message:"OK"})
       })
       .catch(() =>{
         res.status(500).json({message: "An error occurs. Please try again"})
