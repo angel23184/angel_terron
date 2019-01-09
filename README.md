@@ -37,6 +37,7 @@ Empty fields are not allowed
 
 
 Max length:
+
   "destination" = 140 characters
   
   
