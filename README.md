@@ -1,15 +1,15 @@
-#MessageApp
-##Documentation:
+# MessageApp
+## Documentation:
 
-Endpoint:
+### Endpoint:
 http://localhost:9001
 
-Methods: 
+### Methods: 
 
 get:
 http://localhost:9001/
 
-Response:
+#### Response:
 Status 200:
 Hello World
 
@@ -37,12 +37,12 @@ Example:
   "body": "Hello John"
 }
 
-Response:
+#### Response:
 
 Status 200:
 OK
 
-ERRORS:
+#### ERRORS:
 
 Status 400:
 
