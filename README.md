@@ -9,6 +9,10 @@ Methods:
 get:
 http://localhost:9001/
 
+Response:
+Status 200:
+Hello World
+
 post:
 http://localhost:9001/messages
 
