@@ -7,7 +7,7 @@ http://localhost:9001
 ```
 ### Methods: 
 
-get:
+#### get:
 ```sh
 http://localhost:9001/
 ```
@@ -17,7 +17,7 @@ Status 200:
 
 Hello World
 
-post:
+#### post:
 
 ```sh
 http://localhost:9001/messages
@@ -58,7 +58,7 @@ OK
 
 #### ERRORS:
 
-Status 400:
+#### Status 400:
 
 Empty fields are not allowed
 
@@ -73,6 +73,6 @@ Please, respect 140 characters
 Only strings are allowed
 
 
-Status 500:
+#### Status 500:
 
 An error occurs. Please try again
