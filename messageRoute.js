@@ -16,7 +16,7 @@ router.post("/", (req, res) => {
     res.status(400).json({ message: "You must add 2 parameters " });
   } else if (destination.length > 140 && body.length > 140) {
     res.status(400).json({ message: "Please, respect 140 characters" });
-  } else if (typeof destination !== "String" || typeof body !== "String") {
+  } else if (typeof destination !== "string" || typeof body !== "string") {
     res.status(400).json({ message: "Only strings are allowed" });
   } else {
     sendMessage(destination, body, res);
