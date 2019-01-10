@@ -2,7 +2,18 @@ const express = require('express');
 const app = express();
 const bodyParser   = require('body-parser');
 const cookieParser = require('cookie-parser');
+const mongoose = require('mongoose');
 
+
+mongoose.Promise = Promise;
+mongoose
+  .connect(process.env.DBURL)
+  .then(x => {
+    console.log(`Connected to Mongo!`)
+  })
+  .catch(err => {
+    console.error('Error connecting to mongo', err)
+  });
 
 app.get('/', function (req, res) {
   res.send('Hello World!');
@@ -16,7 +27,6 @@ app.listen(9001, function () {
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
 
 app.use('/messages', require('./messageRoute'));
 
