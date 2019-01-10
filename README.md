@@ -65,14 +65,25 @@ Message succesfully saved
 Status 400:
 
 Empty fields are not allowed
+
 First param must be destination
+
 Second param mut be body
+
 You must add 2 parameters
+
 Please, respect 140 characters
+
 Only strings are allowed
+
 An error occurs saving your message. Please try again
+
+
 
 Status 500:
 An error occurs. Please try again
+
 Cannot get the messages. Try again
+
 Message is sent but no answer. Please try again
+
