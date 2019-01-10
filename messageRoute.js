@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const sendMessage = require("./messageClient");
+const functionsMessages = require("./persistentMessages");
 
 router.post("/", (req, res) => {
   const { destination, body } = req.body;
@@ -20,7 +21,12 @@ router.post("/", (req, res) => {
     res.status(400).json({ message: "Only strings are allowed" });
   } else {
     sendMessage(destination, body, res);
+    functionsMessages.saveMessages(res);
   }
+});
+
+router.get("/getmessages", (req, res) => {
+  functionsMessages.getMessages(res);
 });
 
 module.exports = router;
