@@ -14,7 +14,7 @@ setTimeout(() => {
     .catch(err => {
       console.error("Error connecting to mongo", err);
     });
-}, 15000);
+}, 1000);
 
 app.get("/", function(req, res) {
   res.send("Hello World!");
