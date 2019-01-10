@@ -21,7 +21,6 @@ router.post("/", (req, res) => {
     res.status(400).json({ message: "Only strings are allowed" });
   } else {
     sendMessage(destination, body, res);
-    functionsMessages.saveMessages(res);
   }
 });
 

@@ -1,23 +1,23 @@
 const Message = require("./models/Message");
 
-const saveMessages = (destination, body, res) => {
+const saveMessages = (destination, body, status, confirm) => {
   const newMessage = new Message({
     destination,
-    body
+    body,
+    status,
+    confirm
   });
 
   newMessage.save()
     .then(() => {
-      res.status(200).json({ message: "Message succesfully saved" });
+      console.log("Message succesfully saved");
     })
     .catch(err => {
-      res.status(500).json({
-        message: "An error occurs saving your message. Please try again"
-      });
+      console.log("An error occurs saving your message. Please try again");
     });
 };
 
-const getMessages = (res) => {
+const getMessages = res => {
   Message.find()
     .then(messages => {
       res.status(200).json({ messages });
@@ -27,5 +27,5 @@ const getMessages = (res) => {
     });
 };
 
-const functionsMessages = {saveMessages, getMessages}
+const functionsMessages = { saveMessages, getMessages };
 module.exports = functionsMessages;
