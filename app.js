@@ -3,11 +3,13 @@ const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+const dbName = "cabifybootcamp";
+const server = "angel_terron_mongodb_1"
 
 setTimeout(() => {
   mongoose.Promise = Promise;
   mongoose
-    .connect("mongodb://angel_terron_mongodb_1/cabifybootcamp")
+    .connect(`mongodb://${server}/${dbName}`)
     .then(x => {
       console.log(`Connected to Mongo!`);
     })
@@ -27,6 +29,6 @@ app.listen(9001, function() {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use("/messages", require("./messageRoute"));
+app.use("/messages", require("./routes/messageRoute"));
 
 module.exports = app;
