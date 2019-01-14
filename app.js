@@ -30,5 +30,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use("/messages", require("./routes/messageRoute"));
+app.use("/credit", require("./routes/creditRoutes"));
 
 module.exports = app;

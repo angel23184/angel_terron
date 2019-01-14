@@ -7,7 +7,7 @@ const checkCredit =  require("../client/checkCredit")
 
 router.post("/", (req, res) => {
   const { destination, body } = req.body;
-  if (messageValidation(destination, body, req, res )&& checkCredit())  {
+  if (messageValidation(destination, body, req, res )&& checkCredit(res))  {
     sendMessage(destination, body, res);
 
   }

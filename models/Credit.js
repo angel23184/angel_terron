@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const creditSchema = new Schema(
   {
-    amount: { type: Number, required: true, default:"0"},
+    amount: { type: Number, default:1},
   },
   {
     timestamps: {
