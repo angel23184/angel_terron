@@ -13,7 +13,7 @@ const URL = `http://${SERVER_NAME}:${PORT}/message`;
         destination,
         body
       },
-      { timeout: 500 }
+      { timeout: 10000 }
     )
     .then(() => {
       res.status(200).json({ message: "OK" });
