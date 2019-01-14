@@ -3,10 +3,12 @@ const PORT = 3000;
 // const SERVER_NAME = "angel_terron_messageapp_1";
 const SERVER_NAME = "localhost";
 const saveMessages = require("../client/saveMessages");
+const creditValidation = require("../validations/creditValidation");
+
 
 const sendMessage = (destination, body, res) => {
 const URL = `http://${SERVER_NAME}:${PORT}/message`;
-
+if(creditValidation)
   axios
     .post(
       URL,
@@ -17,8 +19,9 @@ const URL = `http://${SERVER_NAME}:${PORT}/message`;
       { timeout: 10000 }
     )
     .then(() => {
+      saveMessages(destination, body, true, true)
       res.status(200).json({ message: "OK" });
-      saveMessages(destination, body, true, true);
+      //restar pasta
     })
     .catch(error => {
       if (error.response === undefined) {

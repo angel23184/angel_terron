@@ -8,9 +8,10 @@ const saveMessages = (destination, body, status, confirm) => {
     confirm
   });
 
-  newMessage.save()
+  return newMessage.save()
     .then(() => {
       console.log("Message succesfully saved");
+      
     })
     .catch(err => {
       console.log("An error occurs saving your message. Please try again");
