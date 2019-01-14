@@ -1,15 +1,14 @@
 const Credit = require("../models/Credit");
 
 const checkCredit = res => {
-  Credit.find()
+  return Credit.find()
     .then(credit => {
-        console.log(credit[0].amount,"1")
-      if (!credit.length || credit.amount<1) {
-        console.log(credit[0]._doc, "2")
-        res.status(200).json({ Message: "insufficient credit. Please insert coin" });
+      if (credit.length === 0 || credit[0].amount < 1) {
+        res
+          .status(200)
+          .json({ Message: "insufficient credit. Please insert coin" });
         return false;
       }
-      console.log(credit.amount, "3")
       return true;
     })
     .catch(err => {

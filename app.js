@@ -4,14 +4,17 @@ const app = express();
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const dbName = "cabifybootcamp";
-const server = "angel_terron_mongodb_1"
+// const server = "angel_terron_mongodb_1"
+const server = "localhost"
 
-setTimeout(() => {
+
+const trm =setInterval(() => {
   mongoose.Promise = Promise;
   mongoose
     .connect(`mongodb://${server}/${dbName}`)
     .then(x => {
       console.log(`Connected to Mongo!`);
+      clearInterval(trm)
     })
     .catch(err => {
       console.error("Error connecting to mongo", err);

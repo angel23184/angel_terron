@@ -1,6 +1,7 @@
 const axios = require("axios");
 const PORT = 3000;
-const SERVER_NAME = "angel_terron_messageapp_1";
+// const SERVER_NAME = "angel_terron_messageapp_1";
+const SERVER_NAME = "localhost";
 const saveMessages = require("../client/saveMessages");
 
 const sendMessage = (destination, body, res) => {
