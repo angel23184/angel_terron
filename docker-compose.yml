@@ -1,16 +1,43 @@
-version: '3'
+# version: '3'
+# services:
+#   exercise1:
+#     build: .
+#     ports:
+#       - "9001:9001"
+#   messageapp:
+#     image: "cabify/backend-bootcamp-messageapp:latest"
+#     ports:
+#       - "3000:3000"
+#   mongodb:
+#     image: mongo
+#     volumes:
+#       - ./data/db:/data/db
+#     ports:
+#       - 27017:27017
+
+version: "3"
 services:
-  exercise1:
+  exercise5:
     build: .
     ports:
-      - "9001:9001"
+      - "9005:9005"
+    links:
+      - messageapp
+      - mongodb1
+      - mongodb2
   messageapp:
-    image: "cabify/backend-bootcamp-messageapp:latest"
+    image: cabify/backend-bootcamp-messageapp
     ports:
       - "3000:3000"
-  mongodb:
+  mongodb1:
     image: mongo
     volumes:
-      - ./data/db:/data/db
+      - ./data/db1:/data/db
     ports:
       - 27017:27017
+  mongodb2:
+    image: mongo
+    volumes:
+      - ./data/db2:/data/db
+    ports:
+      - 27018:27017
