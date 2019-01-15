@@ -1,5 +1,9 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const getConnection = require("../database/database")
+const connection = getConnection();
+const connectionStart = connection.connect;
+console.log("Estoy en el modelo Message")
 
 const messageSchema = new Schema(
   {
@@ -15,5 +19,5 @@ const messageSchema = new Schema(
   }
 );
 
-const Message = mongoose.model("Message", messageSchema);
+const Message = connectionStart.model("Message", messageSchema);
 module.exports = Message;
