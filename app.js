@@ -4,8 +4,8 @@ const app = express();
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const dbName = "cabifybootcamp";
-// const server = "angel_terron_mongodb_1"
-const server = "localhost"
+const server = "angel_terron_mongodb_1"
+//const server = "localhost"
 
 
 const trm =setInterval(() => {
