@@ -1,8 +1,8 @@
-const Credit = require("../models/Credit")
+const {Credit1} = require("../models/Credit")
 
 
 const creditValidation = res => {
-  return Credit.find()
+  return Credit1.find()
   .then(credits => {
     console.log(credits)
     if (credits.length === 0 && credits[0].amount < 1 ) {

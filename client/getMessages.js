@@ -1,7 +1,7 @@
-const Message = require("../models/Message");
+const {Message1} = require("../models/Message");
 
 const getMessages = res => {
-    Message.find()
+    Message1.find()
       .then(messages => {
         res.status(200).json({ messages });
       })

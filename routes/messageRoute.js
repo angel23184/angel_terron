@@ -4,8 +4,7 @@ const sendMessage = require("../controllers/sendMessage");
 const getMessages = require("../client/getMessages");
 const messageValidation = require("../validations/messageValidation");
 const creditValidation = require("../validations/creditValidation");
-const locks = require("locks");
-const mutex = locks.createMutex();
+
 
 
 router.post("/", (req, res) => {
@@ -13,7 +12,7 @@ router.post("/", (req, res) => {
   if (messageValidation(destination, body, req, res)) {
     creditValidation(res).then(response => {
       if (response) {
-        mutex.locks(sendMessage(destination, body, res));
+        sendMessage(destination, body, res);
       }
     });
   }

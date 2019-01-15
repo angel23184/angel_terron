@@ -1,7 +1,7 @@
-const Credit = require("../models/Credit");
+const {Credit1} = require("../models/Credit");
 
 const checkCredit = res => {
-  return Credit.find()
+  return Credit1.find()
     .then(credit => {
       if (credit.length === 0 || credit[0].amount < 1) {
         res
