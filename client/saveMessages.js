@@ -1,7 +1,5 @@
-const Message = require("../models/Message");
-
-const saveMessages = (constructor, destination, body, status, confirm) => {
-  const newMessage = new constructor({
+const saveMessages = (message, destination, body, status, confirm) => {
+  const newMessage = new message({
     destination,
     body,
     status,

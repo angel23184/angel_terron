@@ -1,8 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const connectionsObject = require("../database/database")
-const connectionDB1 = connectionsObject.connectionDB1.connect;
-const connectionDB2 = connectionsObject.connectionDB2.connect;
+const database = require("../database/database")
+
 
 const messageSchema = new Schema(
   {
@@ -18,7 +17,4 @@ const messageSchema = new Schema(
   }
 );
 
-const Message1 = connectionDB1.model("Message", messageSchema);
-const Message2 = connectionDB2.model("Message", messageSchema);
-
-module.exports = {Message1, Message2};
+module.exports = (dbKey) => database.get(dbKey).model("Message", messageSchema)
