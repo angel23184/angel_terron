@@ -1,15 +1,15 @@
-const Credit = require("../models/Credit");
+const { Credit1, Credit2 } = require("../models/Credit");
 const locks = require("locks");
 const mutex = locks.createMutex();
 
-const saveCredit = (amount, res) => {
-  Credit.find().then(credits => {
+const saveCredit = (model, amount, res) => {
+  return model.find().then(credits => {
     if (credits.length === 0) {
-      const newCredit = new Credit({
+      const newModel = new model({
         amount
       });
 
-      return newCredit
+      return newModel
         .save()
         .then(() => {
           res.status(200).json({ message: "Credit succesfully saved" });
