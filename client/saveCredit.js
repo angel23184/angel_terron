@@ -1,11 +1,11 @@
-const { Credit1, Credit2 } = require("../models/Credit");
+const Credit = require("../models/Credit");
 const locks = require("locks");
 const mutex = locks.createMutex();
 
-const saveCredit = (constructor, amount, res) => {
-  Credit1.find().then(credits => {
+const saveCredit = (amount, res) => {
+  Credit.find().then(credits => {
     if (credits.length === 0) {
-      const newCredit = new constructor({
+      const newCredit = new Credit({
         amount
       });
 

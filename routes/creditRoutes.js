@@ -6,6 +6,7 @@ const {Credit1, Credit2} = require("../models/Credit")
 router.post("/", (req, res) => {
   const { amount } = req.body;
   saveCredit(Credit1, amount, res)
+
 });
 
 module.exports = router;
