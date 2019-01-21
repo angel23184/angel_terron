@@ -7,8 +7,9 @@ const messageSchema = new Schema(
   {
     destination: { type: String, required: true},
     body: { type: String, required: true },
-    status:{type: Boolean},
-    confirm:{type: Boolean}
+    status:{type: String},
+    confirm:{type: Boolean},
+    messageId:{type: String}
   },
   {
     timestamps: {

@@ -1,7 +1,8 @@
 const Credit = require("../models/Credit")
 
 
-const creditValidation = res => {
+const creditValidation = () => {
+  console.log("Estoy en creditValidation")
   const creditPrimary = Credit()
   const creditReplica = Credit("replica")
 
@@ -9,7 +10,7 @@ const creditValidation = res => {
   .then(credits => {
     console.log(credits)
     if (credits.length === 0 && credits[0].amount < 1 ) {
-      res.status(400).json({ message: "Not money enough" });
+      console.log({ message: "Not money enough" });
       return false;
     } else {
       return true;

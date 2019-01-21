@@ -9,30 +9,33 @@ const messageReplica = Message("replica");
 const Credit = require("../models/Credit");
 const creditPrimary = Credit();
 
-const sendMessage = (destination, body, res) => {
+const sendMessage = (destination, body, messageId) => {
   const URL = `http://${SERVER_NAME}:${PORT}/message`;
-  axios
+  return axios
     .post(
       URL,
       {
         destination,
-        body
+        body,
+        messageId
       },
       { timeout: 10000 }
     )
     .then(() => {
-      saveMessages(messagePrimary, destination, body, true, true)
+      console.log("sendMessage Save");
+      saveMessages(messagePrimary, destination, body, "send")
         .then(() => {
-          saveMessages(messageReplica, destination, body, true, true)
+          saveMessages(messageReplica, destination, body, "send")
             .then(() => {
-              res.status(200).json({ message: "OK" });
+              console.log({ message: "OK" });
             })
-            .cacth(() => {
-              res.status(400).json({ message: "KO" });
+            .catch(() => {
+              console.log({ message: "KO" });
             });
         })
         .catch(err => {
-          console.log("An error occurs saving your message. Please try again");
+          console.log("Errorrrrr");
+          console.log("An error occurs. Please try again" + err);
         });
       creditPrimary
         .find()
@@ -55,28 +58,41 @@ const sendMessage = (destination, body, res) => {
     })
     .catch(error => {
       if (error.response === undefined) {
-        saveMessages(messagePrimary, destination, body, true, false)
+        console.log("sendMessage Timeout");
+        saveMessages(
+          messagePrimary,
+          destination,
+          body,
+          "not sending.Timeout",
+          false
+        )
           .then(() => {
-            saveMessages(messageReplica, destination, body, true, true);
-            res.status(500).json({
+            saveMessages(
+              messageReplica,
+              destination,
+              body,
+              "not sending. Timeout",
+              true
+            );
+            console.log({
               message: "Message is sent but no answer. Please try again"
             });
           })
           .catch(err => {
-            console.log(
-              "An error occurs saving your message. Please try again"
-            );
+            console.log("An error occurs with your message. Please try again");
           });
       } else {
-        saveMessages(messagePrimary, destination, body, false, false).then(
-          () => {
-            saveMessages(messageReplica, destination, body, true, true);
+        saveMessages(
+          messagePrimary,
+          destination,
+          body,
+          "not sending",
+          false
+        ).then(() => {
+          saveMessages(messageReplica, destination, body, "not sending");
 
-            res
-              .status(500)
-              .json({ message: "An error occurs. Please try again" });
-          }
-        );
+          console.log({ message: "Error. Please try again" });
+        });
       }
     });
 };

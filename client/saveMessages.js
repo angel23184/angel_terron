@@ -1,9 +1,9 @@
-const saveMessages = (message, destination, body, status, confirm) => {
+const saveMessages = (message, destination, body, status, messageId) => {
   const newMessage = new message({
     destination,
     body,
     status,
-    confirm
+    messageId
   });
 
   return newMessage.save()
