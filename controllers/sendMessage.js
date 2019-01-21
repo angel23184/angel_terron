@@ -23,9 +23,9 @@ const sendMessage = (destination, body, messageId) => {
     )
     .then(() => {
       console.log("sendMessage Save");
-      saveMessages(messagePrimary, destination, body, "send")
+      messagePrimary.findOneAndUpdate({messageId}, {status: "Send"})
         .then(() => {
-          saveMessages(messageReplica, destination, body, "send")
+          messageReplica.findOneAndUpdate({messageId}, {status: "Send"})
             .then(() => {
               console.log({ message: "OK" });
             })
@@ -59,21 +59,8 @@ const sendMessage = (destination, body, messageId) => {
     .catch(error => {
       if (error.response === undefined) {
         console.log("sendMessage Timeout");
-        saveMessages(
-          messagePrimary,
-          destination,
-          body,
-          "not sending.Timeout",
-          false
-        )
-          .then(() => {
-            saveMessages(
-              messageReplica,
-              destination,
-              body,
-              "not sending. Timeout",
-              true
-            );
+        messagePrimary.findOneAndUpdate({messageId}, {status: "Timeout"}).then(() => {
+          messageReplica.findOneAndUpdate({messageId}, {status: "Timeout"});
             console.log({
               message: "Message is sent but no answer. Please try again"
             });
@@ -82,14 +69,8 @@ const sendMessage = (destination, body, messageId) => {
             console.log("An error occurs with your message. Please try again");
           });
       } else {
-        saveMessages(
-          messagePrimary,
-          destination,
-          body,
-          "not sending",
-          false
-        ).then(() => {
-          saveMessages(messageReplica, destination, body, "not sending");
+        messagePrimary.findOneAndUpdate({messageId}, {status: "Rejected"}).then(() => {
+          messageReplica.findOneAndUpdate({messageId}, {status: "Rejected"});
 
           console.log({ message: "Error. Please try again" });
         });

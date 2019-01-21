@@ -16,17 +16,18 @@ const addMessageToQueue = (req, res) => {
   const { destination, body } = req.body;
   const messageId = uuidv1();
   const objectKeys = Object.keys(req.body);
-  saveMessage(messagePrimary, destination, body, "Peding");
-  saveMessage(messageReplica, destination, body, "Peding");
+  console.log(messageId + "/////////////////////////////////");
+  saveMessage(messagePrimary, destination, body, "Peding", messageId);
+  saveMessage(messageReplica, destination, body, "Peding", messageId);
 
-  messageQueue.add({ destination, body, messageId, objectKeys }).then(() => {
-    res
-      .status(200)
-      .json({ message: "Message added to queue" })
-      .catch(() => {
-        res.status(500).json({ message: "Message not added to queue" });
-      });
-  });
+  messageQueue
+    .add({ destination, body, messageId, objectKeys })
+    .then(() => {
+      res.status(200).json({ message: messageId });
+    })
+    .catch(() => {
+      res.status(500).json({ message: messageId });
+    });
 };
 
 //Separar messageQueue y llevarlo a app.js y llamarlo desde allí
@@ -38,8 +39,12 @@ messageQueue.process(function(job, done) {
         sendMessage(destination, body, messageId).then(() => {
           done();
         });
+      } else {
+        done();
       }
     });
+  } else {
+    done();
   }
 });
 

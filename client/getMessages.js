@@ -1,9 +1,11 @@
-const {Message1} = require("../models/Message");
+const Message = require("../models/Message");
 
-const getMessages = res => {
-    Message1.find()
+const getMessages = (res, options = {}) => {
+  console.log(options)
+    Message().find({messageId: options})
       .then(messages => {
-        res.status(200).json({ messages });
+        const messageStatus = messages[0].status;
+        res.status(200).json({messageStatus});
       })
       .catch(err => {
         res.status(500).json({ message: "Cannot get the messages. Try again" });

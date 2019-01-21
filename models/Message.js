@@ -9,7 +9,7 @@ const messageSchema = new Schema(
     body: { type: String, required: true },
     status:{type: String},
     confirm:{type: Boolean},
-    messageId:{type: String}
+    messageId:{type: String, enum:["Send","Timeout","Rejected"]}
   },
   {
     timestamps: {

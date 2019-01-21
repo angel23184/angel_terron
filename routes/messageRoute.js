@@ -4,7 +4,6 @@ const addMessageToQueue = require("../queue");
 const getMessages = require("../client/getMessages");
 
 
-
 router.post("/", (req, res) => {
   addMessageToQueue(req, res);
 });
