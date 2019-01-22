@@ -7,9 +7,8 @@ const messageSchema = new Schema(
   {
     destination: { type: String, required: true},
     body: { type: String, required: true },
-    status:{type: String},
-    confirm:{type: Boolean},
-    messageId:{type: String, enum:["Send","Timeout","Rejected"]}
+    status:{type: String, enum:["Send","Pending","Timeout","Rejected"]},
+    messageId:{type: String}
   },
   {
     timestamps: {

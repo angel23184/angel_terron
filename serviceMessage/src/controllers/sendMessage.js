@@ -2,12 +2,9 @@ const axios = require("axios");
 const PORT = 3000;
 //const SERVER_NAME = "angel_terron_messageapp_1";
 const SERVER_NAME = "localhost";
-const saveMessages = require("../client/saveMessages");
 const Message = require("../models/Message");
 const messagePrimary = Message();
 const messageReplica = Message("replica");
-const Credit = require("../models/Credit");
-const creditPrimary = Credit();
 
 const sendMessage = (destination, body, messageId) => {
   const URL = `http://${SERVER_NAME}:${PORT}/message`;
@@ -23,9 +20,11 @@ const sendMessage = (destination, body, messageId) => {
     )
     .then(() => {
       console.log("sendMessage Save");
-      messagePrimary.findOneAndUpdate({messageId}, {status: "Send"})
+      messagePrimary
+        .findOneAndUpdate({ messageId }, { status: "Send" })
         .then(() => {
-          messageReplica.findOneAndUpdate({messageId}, {status: "Send"})
+          messageReplica
+            .findOneAndUpdate({ messageId }, { status: "Send" })
             .then(() => {
               console.log({ message: "OK" });
             })
@@ -37,30 +36,17 @@ const sendMessage = (destination, body, messageId) => {
           console.log("Errorrrrr");
           console.log("An error occurs. Please try again" + err);
         });
-      creditPrimary
-        .find()
-        .then(credits => {
-          const newAmount = (credits[0].amount -= 1);
-          const _id = credits[0]._id;
-
-          creditPrimary
-            .findByIdAndUpdate(_id, { amount: newAmount })
-            .then(credits => {
-              console.log(`Substract correctly`);
-            })
-            .catch(() => {
-              console.log(`Substract incorrectly`);
-            });
-        })
-        .catch(() => {
-          console.log("There was a problem in your balance. Please try again");
-        });
     })
     .catch(error => {
       if (error.response === undefined) {
         console.log("sendMessage Timeout");
-        messagePrimary.findOneAndUpdate({messageId}, {status: "Timeout"}).then(() => {
-          messageReplica.findOneAndUpdate({messageId}, {status: "Timeout"});
+        messagePrimary
+          .findOneAndUpdate({ messageId }, { status: "Timeout" })
+          .then(() => {
+            messageReplica.findOneAndUpdate(
+              { messageId },
+              { status: "Timeout" }
+            );
             console.log({
               message: "Message is sent but no answer. Please try again"
             });
@@ -69,11 +55,16 @@ const sendMessage = (destination, body, messageId) => {
             console.log("An error occurs with your message. Please try again");
           });
       } else {
-        messagePrimary.findOneAndUpdate({messageId}, {status: "Rejected"}).then(() => {
-          messageReplica.findOneAndUpdate({messageId}, {status: "Rejected"});
+        messagePrimary
+          .findOneAndUpdate({ messageId }, { status: "Rejected" })
+          .then(() => {
+            messageReplica.findOneAndUpdate(
+              { messageId },
+              { status: "Rejected" }
+            );
 
-          console.log({ message: "Error. Please try again" });
-        });
+            console.log({ message: "Error. Please try again" });
+          });
       }
     });
 };

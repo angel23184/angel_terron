@@ -15,7 +15,7 @@ app.listen(PORT, function() {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use("/credit", require("../routes/creditRoutes"));
+app.use("/credit", require("./src/routes/creditRoutes"));
 
 
 module.exports = app;
