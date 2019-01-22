@@ -1,29 +1,49 @@
 version: "3"
 services:
-  exercise5:
-    build: .
+  messages:
+    build: ./serviceMessage
     ports:
-      - "9005:9005"
+      - "9001:9001"
     links:
       - messageapp
-      - mongodb1
-      - mongodb2
+      - mongodb1_messages
+      - mongodb2_messages
+  credit:
+    build: ./serviceCredit
+    ports:
+      - "9017:9017"
+    links:
+      - messageapp
+      - mongodb1_credit
+      - mongodb2_credit
   messageapp:
     image: cabify/backend-bootcamp-messageapp
     ports:
       - "3000:3000"
-  mongodb1:
+  mongodb1_messages:
     image: mongo
     volumes:
-      - ./data/db1:/data/db
+      - ./data/db1_messages:/data/db
     ports:
-      - 27017:27017
-  mongodb2:
+      - 27017:27017 
+  mongodb2_messages:
     image: mongo
     volumes:
-      - ./data/db2:/data/db
+      - ./data/db2_messages:/data/db
     ports:
       - 27018:27017
+  mongodb1_credit:
+    image: mongo
+    volumes:
+      - ./data/db1_credit:/data/db
+    ports:
+      - 27019:27017 
+  mongodb2_credit:
+    image: mongo
+    volumes:
+      - ./data/db2_credit:/data/db
+    ports:
+      - 27020:27017
   redis:
     image: redis
     ports:
