@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const database = "cabifybootcamp";
 const servers = {
+  // primary: "angel_terron_mongodb1_1:27017",
+  // replica: "angel_terron_replica_1:27018"
   primary: "localhost:27017",
   replica: "localhost:27018"
 };

@@ -18,5 +18,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use("/messages", require("./src/routes/messageRoute"));
 app.use("/messages", require("./src/routes/messageStatus"));
+app.use("/health", require("./src/routes/haProxyHealth"));
 
 module.exports = app;

@@ -1,6 +1,6 @@
 version: "3"
 services:
-  messages:
+  messages1:
     build: ./serviceMessage
     ports:
       - "9001:9001"
@@ -8,7 +8,7 @@ services:
       - messageapp
       - mongodb1_messages
       - mongodb2_messages
-  messages:
+  messages2:
     build: ./serviceMessage
     ports:
       - "9002:9001"
@@ -16,7 +16,7 @@ services:
       - messageapp
       - mongodb1_messages
       - mongodb2_messages
-  messages:
+  messages3:
     build: ./serviceMessage
     ports:
       - "9003:9001"
@@ -28,22 +28,6 @@ services:
     build: ./serviceCredit
     ports:
       - "9017:9017"
-    links:
-      - messageapp
-      - mongodb1_credit
-      - mongodb2_credit
-      credit:
-    build: ./serviceCredit
-    ports:
-      - "9018:9017"
-    links:
-      - messageapp
-      - mongodb1_credit
-      - mongodb2_credit
-      credit:
-    build: ./serviceCredit
-    ports:
-      - "9019:9017"
     links:
       - messageapp
       - mongodb1_credit
@@ -82,3 +66,17 @@ services:
       - "6379:6379"
     volumes:
       - ../data/redis:/data
+  haproxy:
+    image: haproxy:latest
+    depends_on:
+      - messages1
+      - messages2
+      - messages3
+      - credit
+    volumes:
+      - ./haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
+    ports:
+      - 80:80
+
+
+
