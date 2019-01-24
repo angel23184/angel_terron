@@ -1,7 +1,6 @@
 const Message = require("../models/Message");
 
 const getMessages = (res, options = {}) => {
-  console.log(options)
     Message().find({messageId: options})
       .then(messages => {
         const messageStatus = messages[0].status;

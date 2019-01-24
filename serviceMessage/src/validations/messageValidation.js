@@ -1,6 +1,4 @@
-const messageValidation = (destination, body, messageId, objectKeys) => {
-  console.log("Estoy en message validation");
-
+const messageValidation = (destination, body, objectKeys) => {
   if (destination === "" || body === "") {
     console.log({ message: "Empty fields are not allowed" });
     return false;
@@ -21,9 +19,6 @@ const messageValidation = (destination, body, messageId, objectKeys) => {
     return false;
   } else if (objectKeys === "") {
     console.log({ message: "objectKeys is empty" });
-    return false;
-  } else if (messageId === "") {
-    console.log({ message: "messageId is empty" });
     return false;
   }
   return true;

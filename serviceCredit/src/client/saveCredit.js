@@ -1,7 +1,7 @@
 const locks = require("locks");
 const mutex = locks.createMutex();
 
-const saveCredit = (credit, amount, res) => {
+const saveCredit = (credit, amount) => {
   return credit.find().then(credits => {
     if (credits.length === 0) {
       const newCredit = new credit({
@@ -11,23 +11,19 @@ const saveCredit = (credit, amount, res) => {
       return newCredit
         .save()
         .then(() => {
-          res.status(200).json({ message: "Credit succesfully saved" });
-          mutex.unlock();
+          console.log({ message: "Credit succesfully saved" });
         })
         .catch(err => {
-          res.status(400).json({ message: "Impossible to charge Credit" });
-          mutex.locks();
+          console.log({ message: "Impossible to charge Credit" });
         });
     } else {
       credits[0]
         .update({ $inc: { amount } })
         .then(() => {
-          res.status(200).json({ message: "Credit Update OK" });
-          mutex.unlock();
+          console.log({ message: "Credit Update OK" });
         })
         .catch(() => {
-          res.status(500).json({ message: "Credit Update KO" });
-          mutex.unlock();
+          console.log({ message: "Credit Update KO" });
         });
     }
   });

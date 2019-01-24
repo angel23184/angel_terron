@@ -3,6 +3,7 @@ const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const PORT = 9001;
+require("./src/queue")
 
 app.get("/", function(req, res) {
   res.send("Hello World!");

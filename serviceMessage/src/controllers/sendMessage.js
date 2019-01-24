@@ -33,7 +33,6 @@ const sendMessage = (destination, body, messageId) => {
             });
         })
         .catch(err => {
-          console.log("Errorrrrr");
           console.log("An error occurs. Please try again" + err);
         });
     })

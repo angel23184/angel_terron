@@ -1,42 +1,34 @@
-var Queue = require("bull");
+const Queue = require("bull");
 const PORT = "6379";
 const HOST = "127.0.0.1";
-const uuidv1 = require("uuid/v1");
-const sendMessage = require("./controllers/sendMessage");
+const creditQueue = new Queue("credit queue", `redis://${HOST}:${PORT}`);
+const messageQueue = new Queue("message queue", `redis://${HOST}:${PORT}`);
 const messageValidation = require("./validations/messageValidation");
 const saveMessage = require("./client/saveMessages");
-const Message = require("./models/Message");
-const messagePrimary = Message();
-const messageReplica = Message("replica");
-
-var messageQueue = new Queue("message queue", `redis://${HOST}:${PORT}`);
+const uuidv1 = require("uuid/v1");
+const Message = require("./models/Message.js");
+const primaryMessage = Message();
+const secondaryMessage = Message("replica");
+const sendMessage = require("./controllers/sendMessage");
 
 const addMessageToQueue = (req, res) => {
   const { destination, body } = req.body;
-  const messageId = uuidv1();
   const objectKeys = Object.keys(req.body);
-
-  saveMessage(messagePrimary, destination, body, "Pending", messageId).catch(
-    error => console.log(error)
-  );
-  saveMessage(messageReplica, destination, body, "Pending", messageId).catch(
-    error => console.log(error)
-  );
-
-  messageQueue
-    .add({ destination, body, messageId, objectKeys })
-    .then(() => {
-      res.status(200).json({ message: messageId });
-    })
-    .catch(() => {
-      res.status(500).json({ message: messageId });
-    });
+  const messageId = uuidv1();
+  if (messageValidation(destination, body, objectKeys)) {
+    saveMessage(primaryMessage, destination, body, "Pending", messageId);
+    saveMessage(secondaryMessage, destination, body, "Pending", messageId);
+    res.send(messageId);
+    creditQueue.add({ message: "Ok", destination, body, messageId });
+  } else {
+    res.send("Your message is not correct. Please try again");
+  }
 };
 
 //Separar messageQueue y llevarlo a app.js y llamarlo desde allí
-messageQueue.process(function(job, done) {
-  const { destination, body, messageId, objectKeys } = job.data;
-  if (messageValidation(destination, body, messageId, objectKeys)) {
+messageQueue.process((job, done) => {
+  if (job.data.credit_validation === "Ok") {
+    const { destination, body, messageId } = job.data;
     sendMessage(destination, body, messageId)
       .then(() => {
         done();
