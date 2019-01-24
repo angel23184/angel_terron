@@ -8,10 +8,42 @@ services:
       - messageapp
       - mongodb1_messages
       - mongodb2_messages
+  messages:
+    build: ./serviceMessage
+    ports:
+      - "9002:9001"
+    links:
+      - messageapp
+      - mongodb1_messages
+      - mongodb2_messages
+  messages:
+    build: ./serviceMessage
+    ports:
+      - "9003:9001"
+    links:
+      - messageapp
+      - mongodb1_messages
+      - mongodb2_messages
   credit:
     build: ./serviceCredit
     ports:
       - "9017:9017"
+    links:
+      - messageapp
+      - mongodb1_credit
+      - mongodb2_credit
+      credit:
+    build: ./serviceCredit
+    ports:
+      - "9018:9017"
+    links:
+      - messageapp
+      - mongodb1_credit
+      - mongodb2_credit
+      credit:
+    build: ./serviceCredit
+    ports:
+      - "9019:9017"
     links:
       - messageapp
       - mongodb1_credit
