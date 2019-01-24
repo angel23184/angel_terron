@@ -18,7 +18,7 @@ const saveCredit = (credit, amount) => {
         });
     } else {
       credits[0]
-        .update({ $inc: { amount } })
+        .update({  amount  })
         .then(() => {
           console.log({ message: "Credit Update OK" });
         })
