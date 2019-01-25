@@ -33,7 +33,7 @@ services:
       - mongodb1_credit
       - mongodb2_credit
   messageapp:
-    image: cabify/backend-bootcamp-messageapp
+    image: cabify/backend-bootcamp-messageapp:exercise10
     ports:
       - "3000:3000"
   mongodb1_messages:
